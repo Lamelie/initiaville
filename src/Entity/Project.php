@@ -47,7 +47,7 @@ class Project
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="projects")
@@ -67,14 +67,16 @@ class Project
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="project")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="projects")
      */
-    private $categories;
+    private $category;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,17 +144,22 @@ class Project
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->createdAt = $createdAt;
     }
+
 
     public function getUser(): ?User
     {
@@ -212,16 +219,15 @@ class Project
     /**
      * @return Collection|Category[]
      */
-    public function getCategories(): Collection
+    public function getCategory(): Collection
     {
-        return $this->categories;
+        return $this->category;
     }
 
     public function addCategory(Category $category): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addProject($this);
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
         }
 
         return $this;
@@ -229,11 +235,11 @@ class Project
 
     public function removeCategory(Category $category): self
     {
-        if ($this->categories->contains($category)) {
-            $this->categories->removeElement($category);
-            $category->removeProject($this);
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
         }
 
         return $this;
     }
+
 }

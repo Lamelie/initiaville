@@ -25,13 +25,14 @@ class Category
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Project::class, inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="category")
      */
-    private $project;
+    private $projects;
 
     public function __construct()
     {
         $this->project = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,15 +55,16 @@ class Category
     /**
      * @return Collection|Project[]
      */
-    public function getProject(): Collection
+    public function getProjects(): Collection
     {
-        return $this->project;
+        return $this->projects;
     }
 
     public function addProject(Project $project): self
     {
-        if (!$this->project->contains($project)) {
-            $this->project[] = $project;
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->addCategory($this);
         }
 
         return $this;
@@ -70,10 +72,12 @@ class Category
 
     public function removeProject(Project $project): self
     {
-        if ($this->project->contains($project)) {
-            $this->project->removeElement($project);
+        if ($this->projects->contains($project)) {
+            $this->projects->removeElement($project);
+            $project->removeCategory($this);
         }
 
         return $this;
     }
+
 }
