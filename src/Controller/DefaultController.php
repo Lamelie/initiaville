@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,8 +14,27 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
+        $em = $this->getDoctrine();
+
+        /** @var Project[] $projects */
+        $projects = $em->getRepository(Project::class)->findBy(
+            [],
+            ['createdAt' => 'DESC'],
+            3,
+            0
+        );
+
         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController',
+            'projects' => $projects,
         ]);
     }
+
+    public function catMenu (CategoryRepository $categoryRepository)
+    {
+        return $this->render("default/_menu.html.twig", [
+            "categories" => $categoryRepository->findAll()
+        ]);
+    }
+
+
 }

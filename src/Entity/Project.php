@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Project
 {
@@ -69,14 +70,13 @@ class Project
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="projects")
      */
-    private $category;
+    private $categories;
 
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +161,14 @@ class Project
     }
 
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist() {
+        $this->setCreatedAt(new \DateTime());
+    }
+
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -219,15 +227,15 @@ class Project
     /**
      * @return Collection|Category[]
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
     public function addCategory(Category $category): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
         }
 
         return $this;
@@ -235,8 +243,8 @@ class Project
 
     public function removeCategory(Category $category): self
     {
-        if ($this->category->contains($category)) {
-            $this->category->removeElement($category);
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
         }
 
         return $this;

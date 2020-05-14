@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h2>Il y a {{ category.projects|length }} projet(s) dans la catégorie "{{ category.label }}"</h2>
+
+        <section class="row recipes">
+            {% for project in category.projects %}
+
+                <div class="col-md-4">
+                {% include 'project/_card.html.twig' with {'project': project} only  %}
+                </div>
+            {% endfor %}
+
+        </section>
+    </main>
+{% endblock %}

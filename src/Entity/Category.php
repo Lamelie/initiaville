@@ -25,13 +25,12 @@ class Category
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="categories")
      */
     private $projects;
 
     public function __construct()
     {
-        $this->project = new ArrayCollection();
         $this->projects = new ArrayCollection();
     }
 
@@ -80,4 +79,8 @@ class Category
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getLabel();
+    }
 }
