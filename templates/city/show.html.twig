@@ -3,28 +3,19 @@
 {% block title %}City{% endblock %}
 
 {% block body %}
-    <h1>City</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ city.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ city.name }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ city.picture }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <main class="container">
+        <h2>Il y a {{ city.projects|length }} projet(s) pour la ville de {{ city.name }}</h2>
 
-    <a href="{{ path('city_index') }}">back to list</a>
+        <section class="row recipes">
+            {% for project in city.projects %}
 
-    <a href="{{ path('city_edit', {'id': city.id}) }}">edit</a>
+                <div class="col-md-4">
+                    {% include 'project/_card.html.twig' with {'project': project} only  %}
+                </div>
+            {% endfor %}
 
-    {{ include('city/_delete_form.html.twig') }}
+        </section>
+    </main>
+
 {% endblock %}
