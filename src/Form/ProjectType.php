@@ -7,10 +7,10 @@ use App\Entity\City;
 use App\Entity\Project;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ProjectType extends AbstractType
 {
@@ -20,7 +20,8 @@ class ProjectType extends AbstractType
             ->add('title', TextType::class, [
                 'label'=>'Titre du projet '
             ])
-            ->add('imageFile', VichFileType::class, [
+            ->add('pictureFile', FileType::class, [
+                'mapped'=> false,
                 'label'=>'Illustration'
             ])
             ->add('cost', TextType::class, [

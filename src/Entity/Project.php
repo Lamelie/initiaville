@@ -3,19 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ProjectRepository;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
  * @ORM\HasLifecycleCallbacks()
- * @Vich\Uploadable
  */
 class Project
 {
@@ -32,26 +28,10 @@ class Project
     private $title;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="picture.name, size="picture.size", mimeType="picture.mimeType", originalName="picture.originalName", dimensions="picture.dimensions")
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
      * @ORM\Column(type="string", length=255)
-     * @var EmbeddedFile
      */
     private $picture;
 
-
-    /**
-     * @ORM\Column(type="datetime")
-     *
-     * @var DateTimeInterface|null
-     */
-    private $updatedAt;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
@@ -98,7 +78,6 @@ class Project
 
     public function __construct()
     {
-        $this->picture = new EmbeddedFile();
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
@@ -263,53 +242,18 @@ class Project
         return $this;
     }
 
-    public function getPicture(): ?EmbeddedFile
+
+    public function getPicture(): ?string
     {
         return $this->picture;
     }
 
-    public function setPicture(EmbeddedFile $picture): void
+
+    public function setPicture($picture): self
     {
         $this->picture = $picture;
-    }
 
-    /**
-     * @return File|null
-     */
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param File|UploadedFile|null $imageFile
-     */
-    public function setImageFile(?File $imageFile = null)
-    {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getUpdatedAt(): ?DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTimeInterface|null $updatedAt
-     */
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
+        return $this;
     }
 
 
