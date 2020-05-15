@@ -40,7 +40,7 @@
                         Profil
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="profile.html">
+                        <a class="dropdown-item" href="{{ path('user_edit', {'id' : app.user.id  }) }}">
                             <i class="fa fa-user"></i>
                             Mon Compte
                         </a>

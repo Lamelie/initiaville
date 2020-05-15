@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,8 +26,11 @@ class DefaultController extends AbstractController
             0
         );
 
+        $users = $em->getRepository(User::class)->findAll();
+
         return $this->render('default/index.html.twig', [
             'projects' => $projects,
+            'users' => $users,
         ]);
     }
 
@@ -35,6 +40,7 @@ class DefaultController extends AbstractController
             "categories" => $categoryRepository->findAll()
         ]);
     }
+
 
 
 }

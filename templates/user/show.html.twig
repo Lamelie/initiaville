@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>Mon compte</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="input-firstname">Prénom</label>
+            <input type="text" class="form-control" id="input-firstname" value="{{ user.firstname }}">
+        </div>
+        <div class="form-group">
+            <label for="input-lastname">Nom</label>
+            <input type="text" class="form-control" id="input-lastname" value="{{ user.lastname }}">
+        </div>
+        <div class="form-group">
+            <label for="input-email">Email</label>
+            <input type="email" class="form-control" id="input-email" value="{{ user.email}}">
+        </div>
+        <a href="{{ path('user_edit', {'id' : app.user.id}) }}" class="btn btn-primary">Mettre à jour</a>
+    </form>
+
+    <hr>
+
+    <h2>Mes projets</h2>
+
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+
+            {% for project in user.projects  %}
+
+            {% include 'user/_card.html.twig' %}
+
+            {% endfor %}
+        </div>
+
+        <div class="col mb-4">
+            <a href="new-project.html" class="btn btn-lg btn-block btn-success">
+                <i class="fa fa-plus-circle"></i>
+                Proposer un nouveau projet
+            </a>
+        </div>
+    </div>
+{% endblock %}
