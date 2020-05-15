@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ProjectType extends AbstractType
 {
@@ -19,7 +20,7 @@ class ProjectType extends AbstractType
             ->add('title', TextType::class, [
                 'label'=>'Titre du projet '
             ])
-            ->add('picture', TextType::class, [
+            ->add('imageFile', VichFileType::class, [
                 'label'=>'Illustration'
             ])
             ->add('cost', TextType::class, [
