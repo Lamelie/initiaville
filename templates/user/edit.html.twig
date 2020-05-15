@@ -12,14 +12,12 @@
     <h2>Mes projets</h2>
 
     <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-4">
 
             {% for project in user.projects  %}
 
                 {% include 'user/_card.html.twig' %}
 
             {% endfor %}
-        </div>
 
         <div class="col mb-4">
             <a href="new-project.html" class="btn btn-lg btn-block btn-success">
