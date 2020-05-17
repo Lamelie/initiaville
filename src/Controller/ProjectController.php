@@ -52,7 +52,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($project);
             $entityManager->flush();
 
-            return $this->redirectToRoute('project_index');
+            return $this->redirectToRoute('project_show',['id' => $project->getId()]);
         }
 
         return $this->render('project/new.html.twig', [
@@ -102,6 +102,6 @@ class ProjectController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('project_index');
+        return $this->redirectToRoute('user_edit',['id' => $project->getUser()->getId()]);
     }
 }
