@@ -7,8 +7,14 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.scss';
-
 import 'bootstrap';
+
+let input = document.getElementById('project_pictureFile');
+
+input.addEventListener('change', function () {
+    let label = document.querySelector('.custom-file-label');
+    label.innerHTML = this.value;
+});
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';

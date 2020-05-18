@@ -251,7 +251,7 @@ class Project
 
     public function setPicture($picture): self
     {
-        $this->picture = $picture;
+        $this->picture = 'projects/' . $picture;
 
         return $this;
     }

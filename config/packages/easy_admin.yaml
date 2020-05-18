@@ -1,20 +1,48 @@
 easy_admin:
     entities:
-        # List the entity class name you want to manage
-        # todo: finir l'administration du site
         Project:
             class: App\Entity\Project
             list:
                 actions: ['-edit', '-new']
+            #page de présentation des projets dans l'admin. Suppression du bouton "éditer"
+            show:
+                actions: ['-edit']
 
         Category:
             class: App\Entity\Category
             form:
                 fields :
-                    - 'label'
+                    - { property: 'label', label: 'Nom de la catégorie'}
         User:
             class: App\Entity\User
             list:
                 actions: ['-edit', '-new']
+            show:
+                actions: ['-edit']
+                fields:
+                    - 'email'
+                    - 'firstname'
+                    - 'lastname'
+                    - {property: 'roles', type: 'simple_array'}
+                    - 'projects'
+
         City:
             class: App\Entity\City
+            image_base_path: '%uploads_url%'
+            list:
+                fields:
+                    - 'name'
+                    - { property: 'picture', type: 'image' }
+            form:
+                fields:
+                    - 'name'
+                    - { property: 'picturePath', label: 'Photo', type: 'file_upload', type_options: { upload_dir: 'public\uploads\cities' } }
+
+        Comment:
+            class: App\Entity\Comment
+            list:
+                actions: ['-new']
+            form:
+                fields:
+                    - 'title'
+                    - 'content'
