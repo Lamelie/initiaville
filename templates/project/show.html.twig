@@ -39,7 +39,7 @@
     <form class="bg-light rounded p-2" method="post">
         <h2>Ajouter un commentaire</h2>
         {% if app.user %}
-            {% include 'comment/new.html.twig' %}
+            {% include 'comment/_form.html.twig' %}
         {% else %}
         <p><a href="{{ path('app_login') }}">Identifiez-vous</a> ou <a href="{{ path('app_register') }}">inscrivez-vous</a> pour ajouter un commentaire</p>
         {% endif %}

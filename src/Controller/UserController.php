@@ -16,15 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="user_index", methods={"GET"})
-     */
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
+
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
@@ -51,9 +43,14 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
+     *
      */
+
     public function show(User $user): Response
     {
+        if (!$this->isGranted("ROLE_ADMIN") && $this->getUser() !== $user) {
+            throw $this->createAccessDeniedException("Vous n'avez pas le droit d'accéder à cette page'");
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);

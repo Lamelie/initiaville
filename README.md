@@ -18,11 +18,28 @@ faut ensuite reprendre project/_card pour l'afficher les projets relatifs à cet
 
 - [x] Pouvoir cliquer sur le menu "Les Villes" pour afficher la liste des villes
 
+il est nécessaire de faire un CRUD de l'entité City afin de créer la page index listant toutes les villes.
+
 - [x] Pouvoir cliquer sur une ville pour afficher la liste des projets dans la ville (affichage similaire à la page d'une catégorie)
+
+idem que pour la liste des projets dans chaque catégorie.
+
 - [x] Ajouter un formulaire de création de compte accessible dans le menu principal lorsque l'internaute n'est pas connecté
+
+CRUD de User. commande à faire : php bin/console make:registration-form
+Ajout d'un lien "s'inscrire" dans "_menu" qui n'est visible que s'il n'y a pas de "app.user" sur la page.
+
 - [x] Ajouter un formulaire de login accessible dans le menu principal lorsque l'internaute n'est pas connecté
+commande à faire : php bin/console make:auth
+Ajout d'un lien "se connecter" dans "_menu" qui n'est visible que s'il n'y a pas de "app.user" sur la page.
+
 - [x] Afficher sur la page d'accueil un bouton pour proposer un nouveau projet (uniquement visible si l'utilisateur est connecté)
-- [x] Créer la page de profile d'un internaute (uniquement visible si l'utilisateur est connecté)
+ajout d'une condition "if app.user" autour du bouton de nouveau projet sur la page d'accueil. 
+
+- [x] Créer la page de profil d'un internaute (uniquement visible si l'utilisateur est connecté)
+- sécurisation de la page user/{id}/edit afin que celle ci ne soit visible que par l'admin ou l'utilisateur concerné.
+- implémentation du formulaire et création d'un _card pour les projets de la liste des derniers projets de l'utilisateur.
+
 - [x] Pouvoir modifier ses informations de profile
 - [x] Afficher la liste des projets de l'utilisateur connecté sur sa page de profile
 - [x] Pouvoir modifier / supprimer les projets dans la liste des projets de l'utilisateur (attention à la sécurité sur cette fonctionnalité !)

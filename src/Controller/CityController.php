@@ -73,6 +73,7 @@ class CityController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, City $city): Response
     {
@@ -93,6 +94,7 @@ class CityController extends AbstractController
 
     /**
      * @Route("/{id}", name="city_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, City $city): Response
     {

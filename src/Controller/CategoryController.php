@@ -15,18 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoryController extends AbstractController
 {
-    /**
-     * @Route("/", name="category_index", methods={"GET"})
-     */
-    public function index(CategoryRepository $categoryRepository): Response
-    {
-        return $this->render('category/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-        ]);
-    }
+
 
     /**
      * @Route("/new", name="category_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -60,6 +53,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="category_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Category $category): Response
     {
@@ -80,6 +74,7 @@ class CategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="category_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Category $category): Response
     {
