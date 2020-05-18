@@ -34,9 +34,12 @@
 
             <ul class="navbar-nav">
                 {% if app.user %}
-                    <li class="nav-link">
+                    <li class="nav-link nav-item">
                         Bonjour, {{ app.user.firstname }} !
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a class="nav-link" href="{{ path('easyadmin') }}"><i class="fa fa-dashboard"></i> Administration</a></li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user"></i>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,10 +61,13 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
-     * todo: sécuriser action de modification de compte/projet + suppresion de projets
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, User $user): Response
     {
+        if (!$this->isGranted("ROLE_ADMIN") && $user !== $this->getUser()) {
+            throw $this->createAccessDeniedException("Vous n'avez pas le droit d'accéder à cette page");
+        }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 

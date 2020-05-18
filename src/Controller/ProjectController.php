@@ -73,9 +73,13 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Project $project): Response
     {
+        if (!$this->isGranted("ROLE_ADMIN") && $this->getUser() !== $project->getUser()) {
+            throw $this->createAccessDeniedException("Vous n'avez pas le droit de modifier ce projet");
+        }
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
@@ -93,6 +97,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}", name="project_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Project $project): Response
     {

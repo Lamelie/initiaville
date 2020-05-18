@@ -1,0 +1,20 @@
+easy_admin:
+    entities:
+        # List the entity class name you want to manage
+        # todo: finir l'administration du site
+        Project:
+            class: App\Entity\Project
+            list:
+                actions: ['-edit', '-new']
+
+        Category:
+            class: App\Entity\Category
+            form:
+                fields :
+                    - 'label'
+        User:
+            class: App\Entity\User
+            list:
+                actions: ['-edit', '-new']
+        City:
+            class: App\Entity\City
