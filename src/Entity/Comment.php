@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
@@ -74,7 +75,7 @@ class Comment
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -87,6 +88,44 @@ class Comment
     public function setCreatedAt($createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getCreatedAtFormat ()
+    {
+        return $this->formatTime($this->getCreatedAt());
+    }
+
+    private function formatTime(\DateTimeInterface $time): string
+    {
+        $date1 = new \DateTime("now");
+        $date2 = $this->getCreatedAt();
+        $interval = $date2->diff($date1);
+        $days = $interval->format("d");
+        $hours = $interval->format("h");
+        $minutes = $interval->format("i");
+        $formattedTime = "";
+
+        if ($days > 0)
+            $formattedTime = "$days jour" . (($days > 1) ? "s" : "");
+
+        else {
+            if ($hours > 0) {
+                $formattedTime = "$hours heure" . (($hours > 1) ? "s" : "");
+            }
+            $formattedTime .= " ";
+            if ($minutes > 0) {
+                $formattedTime .= "$minutes minute" . (($minutes > 1) ? "s" : "");
+            }
+        }
+
+        return $interval->format($formattedTime);
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist() {
+        $this->setCreatedAt(new \DateTime());
     }
 
     public function getUser(): ?User

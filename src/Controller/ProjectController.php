@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Project;
+use App\Form\CommentType;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use App\Service\FileUploader;
@@ -62,12 +64,29 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="project_show", methods={"GET"})
+     * @Route("/{id}", name="project_show", methods={"GET", "POST"})
      */
-    public function show(Project $project): Response
+    public function show(Project $project, Request $request): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setUser($this->getUser());
+            $comment->setProject($project);
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('project_show',['id' => $project->getId()]);
+        }
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'comment' => $comment,
+            'form' => $form->createView(),
         ]);
     }
 

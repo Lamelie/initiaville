@@ -20,8 +20,9 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         $boitealire->setCity($this->getReference("rennes"));
         $boitealire->setCost(3000);
         $boitealire->addCategory($this->getReference("loisir"));
-
         $manager->persist($boitealire);
+        $this->addReference("boitealire", $boitealire);
+
 
         $potager = new Project();
         $potager->setPicture('projects/potager-toit.jpg');
