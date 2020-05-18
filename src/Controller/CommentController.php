@@ -16,15 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
-    /**
-     * @Route("/", name="comment_index", methods={"GET"})
-     */
-    public function index(CommentRepository $commentRepository): Response
-    {
-        return $this->render('comment/index.html.twig', [
-            'comments' => $commentRepository->findAll(),
-        ]);
-    }
+
 
     /**
      * @Route("/new", name="comment_new", methods={"GET","POST"})
