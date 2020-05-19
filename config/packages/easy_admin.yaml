@@ -1,10 +1,19 @@
 easy_admin:
+    site_name: "Initiaville"
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
     entities:
         Project:
             class: App\Entity\Project
             list:
-                actions: ['-edit', '-new']
-            #page de présentation des projets dans l'admin. Suppression du bouton "éditer"
+                actions: ['-edit', '-new', 'show']
+                fields:
+                    - 'title'
+                    - 'excerpt'
+                    - 'createdAt'
+                    - 'user'
             show:
                 actions: ['-edit']
 
@@ -16,7 +25,7 @@ easy_admin:
         User:
             class: App\Entity\User
             list:
-                actions: ['-edit', '-new']
+                actions: ['-edit', '-new', 'show']
             show:
                 actions: ['-edit']
                 fields:

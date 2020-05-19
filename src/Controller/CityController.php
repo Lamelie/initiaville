@@ -71,39 +71,4 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function edit(Request $request, City $city): Response
-    {
-        $form = $this->createForm(CityType::class, $city);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('city_index');
-        }
-
-        return $this->render('city/edit.html.twig', [
-            'city' => $city,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="city_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function delete(Request $request, City $city): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($city);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('city_index');
-    }
 }

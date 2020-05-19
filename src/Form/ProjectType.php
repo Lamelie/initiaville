@@ -23,7 +23,8 @@ class ProjectType extends AbstractType
             ])
             ->add('pictureFile', FileType::class, [
                 'mapped'=> false,
-                'label'=>'Illustration'
+                'label'=>'Illustration',
+
             ])
             ->add('cost', MoneyType::class, [
                 'label'=>'Budget'

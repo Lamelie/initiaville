@@ -100,26 +100,30 @@ class Comment
         $date1 = new \DateTime("now");
         $date2 = $this->getCreatedAt();
         $interval = $date2->diff($date1);
-        $days = $interval->format("d");
-        $hours = $interval->format("h");
-        $minutes = $interval->format("i");
+        $days = $interval->format('%R%a');
+        $hours = $interval->format("%h");
+        $minutes = $interval->format("%i");
+        $secondes = $interval->format("%s");
         $formattedTime = "";
 
         if ($days > 0)
             $formattedTime = "$days jour" . (($days > 1) ? "s" : "");
 
-        else {
-            if ($hours > 0) {
+        elseif ($hours > 0) {
                 $formattedTime = "$hours heure" . (($hours > 1) ? "s" : "");
             }
-            $formattedTime .= " ";
-            if ($minutes > 0) {
-                $formattedTime .= "$minutes minute" . (($minutes > 1) ? "s" : "");
+
+        elseif ($minutes > 0) {
+                $formattedTime = "$minutes minute" . (($minutes > 1) ? "s" : "");
             }
+
+        elseif ($secondes > 0) {
+            $formattedTime = "$secondes seconde" . (($secondes>1)? "s" : "");
         }
 
         return $interval->format($formattedTime);
     }
+
 
     /**
      * @ORM\PrePersist()
